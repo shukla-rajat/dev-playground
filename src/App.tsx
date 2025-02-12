@@ -15,12 +15,11 @@ const DATA = [
 ];
 
 function App() {
-  
 
   return (
     <div>
       <CurrencyProvider>
-        <CurrencyButtons/> 
+        <CurrencyButtons />
         <Books list={DATA} />
       </CurrencyProvider>
     </div>
@@ -28,7 +27,7 @@ function App() {
 }
 
 const CurrencyButtons = () => {
-  const {onChange} = useCurrency();
+  const { onChange } = useCurrency();
   return Object.values(CURRENCIES).map((item) => (
     <CurrencyButton key={item.label} onClick={() => onChange(item)} >
       {item.label}
@@ -36,28 +35,28 @@ const CurrencyButtons = () => {
   ));
 }
 
-const CurrencyButton = ({children, onClick}) => (
+const CurrencyButton = ({ children, onClick }) => (
   <button
-  type="button"
-  onClick={onClick}
+    type="button"
+    onClick={onClick}
   >
     {children}
   </button>
 );
 
-const Books = ({list}) => (
+const Books = ({ list }) => (
   <ul>
     {list.map((item) => (
-      <Book key={item.id} item={item}/>
+      <Book key={item.id} item={item} />
     ))}
   </ul>
 )
 
-const Book = ({item}) => {
-  const {value} = useCurrency();
+const Book = ({ item }) => {
+  const { value } = useCurrency();
   return (
-      <li>{item.title} - {item.price} {value.symbol}</li>
+    <li>{item.title} - {item.price} {value.symbol}</li>
   );
 }
-  
+
 export default App
