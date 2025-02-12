@@ -29,14 +29,21 @@ function App() {
   const [currency, setCurrency] = React.useState('$');
 
   return (
-   <div>
+    <div>
       <CurrencyContext.Provider value={currency}>
-        <button type='button' onClick={() => setCurrency(CURRENCIES.Usd)}> {CURRENCIES.Usd.label} </button>
-        <button type='button' onClick={() => setCurrency(CURRENCIES.Euro)}> {CURRENCIES.Euro.label} </button>
+        {Object.values(CURRENCIES).map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            onClick={() => setCurrency(item)}
+          >
+            {item.label}
+          </button>
+        ))}
         <Books list={DATA} />
       </CurrencyContext.Provider>
-   </div>
-  );
+    </div>
+  )
 }
 
 const Books = ({list}) => (
