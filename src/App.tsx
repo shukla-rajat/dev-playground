@@ -31,20 +31,29 @@ function App() {
   return (
     <div>
       <CurrencyContext.Provider value={currency}>
-        {Object.values(CURRENCIES).map((item) => (
-          <button
-            key={item.label}
-            type="button"
-            onClick={() => setCurrency(item)}
-          >
-            {item.label}
-          </button>
-        ))}
+        <CurrencyButtons onChange={setCurrency} /> 
         <Books list={DATA} />
       </CurrencyContext.Provider>
     </div>
   )
 }
+
+const CurrencyButtons = ({onChange}) => {
+  return Object.values(CURRENCIES).map((item) => (
+    <CurrencyButton key={item.label} onClick={() => onChange(item)} >
+      {item.label}
+    </CurrencyButton>
+  ));
+}
+
+const CurrencyButton = ({children, onClick}) => (
+  <button
+  type="button"
+  onClick={onClick}
+  >
+    {children}
+  </button>
+);
 
 const Books = ({list}) => (
   <ul>
