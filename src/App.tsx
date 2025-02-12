@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CurrencyProvider, useCurrency } from './currency-context';
+import { CurrencyProvider, useCurrency, CURRENCIES } from './currency-context';
 
 const DATA = [
   {
@@ -14,31 +14,21 @@ const DATA = [
   },
 ];
 
-const CURRENCIES = {
-  Euro: {
-    symbol: '€',
-    label: 'Euro'
-  },
-  Usd: {
-    symbol: '$',
-    label: 'Dollor'
-  },
-};
-
 function App() {
-  const [currency, setCurrency] = React.useState('$');
+  
 
   return (
     <div>
-      <CurrencyProvider value={currency}>
-        <CurrencyButtons onChange={setCurrency} /> 
+      <CurrencyProvider>
+        <CurrencyButtons/> 
         <Books list={DATA} />
       </CurrencyProvider>
     </div>
   )
 }
 
-const CurrencyButtons = ({onChange}) => {
+const CurrencyButtons = () => {
+  const {onChange} = useCurrency();
   return Object.values(CURRENCIES).map((item) => (
     <CurrencyButton key={item.label} onClick={() => onChange(item)} >
       {item.label}
@@ -64,9 +54,9 @@ const Books = ({list}) => (
 )
 
 const Book = ({item}) => {
-  const currency = useCurrency();
+  const {value} = useCurrency();
   return (
-      <li>{item.title} - {item.price} {currency.symbol}</li>
+      <li>{item.title} - {item.price} {value.symbol}</li>
   );
 }
   
