@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CurrencyContext } from './currency-context';
+import { CurrencyProvider, useCurrency } from './currency-context';
 
 const DATA = [
   {
@@ -30,10 +30,10 @@ function App() {
 
   return (
     <div>
-      <CurrencyContext.Provider value={currency}>
+      <CurrencyProvider value={currency}>
         <CurrencyButtons onChange={setCurrency} /> 
         <Books list={DATA} />
-      </CurrencyContext.Provider>
+      </CurrencyProvider>
     </div>
   )
 }
@@ -64,7 +64,7 @@ const Books = ({list}) => (
 )
 
 const Book = ({item}) => {
-  const currency = React.useContext(CurrencyContext);
+  const currency = useCurrency();
   return (
       <li>{item.title} - {item.price} {currency.symbol}</li>
   );
