@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import * as React from 'react';
+import { CurrencyContext } from './currency-context';
+
+const DATA = [
+  {
+    id: '1',
+    title: 'The Road to React',
+    price: 19.99
+  },
+  {
+    id: '2',
+    title: 'The Road to GraphQL',
+    price: 29.99
+  },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+   <div>
+      <CurrencyContext.Provider value='$'>
+        <Books list={DATA} />
+      </CurrencyContext.Provider>
+   </div>
+  );
 }
+
+const Books = ({list}) => (
+  <ul>
+    {list.map((item) => (
+      <Book key={item.id} item={item}/>
+    ))}
+  </ul>
+)
+
+const Book = ({item}) => (
+  <CurrencyContext.Consumer>
+    {(currency) => (
+        <li>{item.title} - {item.price} {currency}</li>
+    )}
+  </CurrencyContext.Consumer>
+)
+  
 
 export default App
