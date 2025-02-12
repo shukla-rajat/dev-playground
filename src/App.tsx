@@ -15,9 +15,13 @@ const DATA = [
 ];
 
 function App() {
+  const [currency, setCurrency] = React.useState('$');
+
   return (
    <div>
-      <CurrencyContext.Provider value='$'>
+      <CurrencyContext.Provider value={currency}>
+        <button type='button' onClick={() => setCurrency('$')}> Dollar </button>
+        <button type='button' onClick={() => setCurrency('€')}> Euro </button>
         <Books list={DATA} />
       </CurrencyContext.Provider>
    </div>
@@ -32,13 +36,11 @@ const Books = ({list}) => (
   </ul>
 )
 
-const Book = ({item}) => (
-  <CurrencyContext.Consumer>
-    {(currency) => (
-        <li>{item.title} - {item.price} {currency}</li>
-    )}
-  </CurrencyContext.Consumer>
-)
+const Book = ({item}) => {
+  const currency = React.useContext(CurrencyContext);
+  return (
+      <li>{item.title} - {item.price} {currency}</li>
+  );
+}
   
-
 export default App
